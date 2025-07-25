@@ -350,7 +350,14 @@ export default function ContactsTable() {
   // Extract complex expressions into separate variables
   const statusColumn = table.getColumn("status");
   const statusFacetedValues = statusColumn?.getFacetedUniqueValues();
-  const statusFilterValue = statusColumn?.getFilterValue();
+  // const statusFilterValue = statusColumn?.getFilterValue();
+
+  // statusFilterValue já é o value do filtro
+  const statusFilterValue = (table.getColumn("status")?.getFilterValue() as string[]) ?? [];
+
+  const handleStatusChange = (newValue: string[]) => {
+    table.getColumn("status")?.setFilterValue(newValue.length ? newValue : undefined);
+  };
 
   // Update useMemo hooks with simplified dependencies
   const uniqueStatusValues = useMemo(() => {
@@ -368,7 +375,7 @@ export default function ContactsTable() {
     return (statusFilterValue as string[]) ?? [];
   }, [statusFilterValue]);
 
-  const handleStatusChange = (checked: boolean, value: string) => {
+  const handleStatusChangeOld = (checked: boolean, value: string) => {
     const filterValue = table.getColumn("status")?.getFilterValue() as string[];
     const newFilterValue = filterValue ? [...filterValue] : [];
 
@@ -451,10 +458,10 @@ export default function ContactsTable() {
           {/* Filter by status */}
           <StatusFilter
             id={id}
-            uniqueStatusValues={uniqueStatusValues}
-            selectedStatuses={selectedStatuses}
-            statusCounts={statusCounts}
-            onStatusChange={handleStatusChange}
+            options={uniqueStatusValues}
+            value={statusFilterValue}
+            counts={statusCounts}
+            onChange={handleStatusChange}
           />
 
           {/* New filter button */}
