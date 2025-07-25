@@ -89,6 +89,7 @@ import {
 import { TableHeaderCell } from "./table-header-cell";
 import { NameFilter } from "./name-filter";
 import { StatusFilter } from "./status-filter";
+import { DeleteDialogButton } from "./delete-dialog-button";
 import { DeleteSelectedButton } from "./delete-selected-button";
 
 type Item = {
@@ -516,7 +517,6 @@ function RowActions({
   item: Item;
 }) {
   const [isUpdatePending, startUpdateTransition] = useTransition();
-  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   const handleStatusToggle = () => {
     startUpdateTransition(() => {
@@ -552,7 +552,6 @@ function RowActions({
     startUpdateTransition(() => {
       const updatedData = data.filter((dataItem) => dataItem.id !== item.id);
       setData(updatedData);
-      setShowDeleteDialog(false);
     });
   };
 
@@ -589,39 +588,25 @@ function RowActions({
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuItem
+
+          {/* <DropdownMenuItem
             onClick={() => setShowDeleteDialog(true)}
             variant="destructive"
             className="dark:data-[variant=destructive]:focus:bg-destructive/10"
           >
             Delete
-          </DropdownMenuItem>
+          </DropdownMenuItem> */}
+
+          <DeleteDialogButton
+            onDelete={handleDelete}
+            disabled={isUpdatePending}
+            type="dropdown"
+            triggerText="Delete"
+            title="Delete contact?"
+            description="This action cannot be undone. This will permanently delete this contact."
+          />
         </DropdownMenuContent>
       </DropdownMenu>
-
-      <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete this
-              contact.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel disabled={isUpdatePending}>
-              Cancel
-            </AlertDialogCancel>
-            <AlertDialogAction
-              onClick={handleDelete}
-              disabled={isUpdatePending}
-              className="bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40"
-            >
-              Delete
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
     </>
   );
 }
