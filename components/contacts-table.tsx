@@ -304,7 +304,7 @@ export default function ContactsTable() {
     async function fetchPosts() {
       try {
         const res = await fetch(
-          "https://raw.githubusercontent.com/origin-space/origin-images/refs/heads/main/exp1/users-02_mohkpe.json",
+          "https://raw.githubusercontent.com/origin-space/origin-images/refs/heads/main/users-02_mohkpe.json",
         );
         const data = await res.json();
         setData(data);
@@ -350,9 +350,7 @@ export default function ContactsTable() {
   // Extract complex expressions into separate variables
   const statusColumn = table.getColumn("status");
   const statusFacetedValues = statusColumn?.getFacetedUniqueValues();
-  // const statusFilterValue = statusColumn?.getFilterValue();
 
-  // statusFilterValue já é o value do filtro
   const statusFilterValue = (table.getColumn("status")?.getFilterValue() as string[]) ?? [];
 
   const handleStatusChange = (newValue: string[]) => {
@@ -370,28 +368,6 @@ export default function ContactsTable() {
     if (!statusColumn) return new Map();
     return statusFacetedValues ?? new Map();
   }, [statusColumn, statusFacetedValues]);
-
-  const selectedStatuses = useMemo(() => {
-    return (statusFilterValue as string[]) ?? [];
-  }, [statusFilterValue]);
-
-  const handleStatusChangeOld = (checked: boolean, value: string) => {
-    const filterValue = table.getColumn("status")?.getFilterValue() as string[];
-    const newFilterValue = filterValue ? [...filterValue] : [];
-
-    if (checked) {
-      newFilterValue.push(value);
-    } else {
-      const index = newFilterValue.indexOf(value);
-      if (index > -1) {
-        newFilterValue.splice(index, 1);
-      }
-    }
-
-    table
-      .getColumn("status")
-      ?.setFilterValue(newFilterValue.length ? newFilterValue : undefined);
-  };
 
   return (
     <div className="space-y-4">
