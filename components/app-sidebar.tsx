@@ -1,15 +1,15 @@
-import * as React from "react"
 import {
-  RiScanLine,
   RiBardLine,
-  RiUserFollowLine,
   RiCodeSSlashLine,
-  RiLoginCircleLine,
   RiLayoutLeftLine,
-  RiSettings3Line,
   RiLeafLine,
+  RiLoginCircleLine,
   RiLogoutBoxLine,
+  RiScanLine,
+  RiSettings3Line,
+  RiUserFollowLine,
 } from "@remixicon/react"
+import * as React from "react"
 
 import { SearchForm } from "@/components/search-form"
 import { TeamSwitcher } from "@/components/team-switcher"
@@ -31,8 +31,8 @@ import {
 const data = {
   teams: [
     {
-      name: "InnovaCraft",
-      logo: "https://raw.githubusercontent.com/origin-space/origin-images/refs/heads/main/exp1/logo-01_kp2j8x.png",
+      name: "RubyIO",
+      logo: "https://raw.githubusercontent.com/RubyIoSpace/dashboard/refs/heads/main/public/logo.svg",
     },
     {
       name: "Acme Corp.",
