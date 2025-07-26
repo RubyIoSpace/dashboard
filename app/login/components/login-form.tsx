@@ -1,4 +1,7 @@
+"use client"
+
 import Link from "next/link"
+import { useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -15,10 +18,37 @@ import { cn } from "@/lib/utils"
 import { AppleLoginButton } from "../../../components/apple-login-button"
 import { GoogleLoginButton } from "../../../components/google-login-button"
 
+interface LoginFormProps {
+  onSubmit?: (data: { email: string; password: string }) => void
+  className?: string
+}
+
 export function LoginForm({
+  onSubmit,
   className,
   ...props
-}: React.ComponentProps<"div">) {
+}: LoginFormProps & Omit<React.ComponentProps<"div">, "onSubmit">) {
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsLoading(true)
+
+    try {
+      if (onSubmit) {
+        await onSubmit({ email, password })
+      } else {
+        // Comportamento padrão se não houver onSubmit
+        console.log("Login realizado:", { email, password })
+      }
+    } catch (error) {
+      console.error("Erro no login:", error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -29,7 +59,7 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="grid gap-6">
               <div className="flex flex-col gap-4">
                 <GoogleLoginButton />
@@ -48,6 +78,8 @@ export function LoginForm({
                     id="email"
                     type="email"
                     placeholder="exemplo@email.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     required
                   />
                 </div>
@@ -61,10 +93,16 @@ export function LoginForm({
                       Esqueceu sua senha?
                     </Link>
                   </div>
-                  <Input id="password" type="password" required />
+                  <Input
+                    id="password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
                 </div>
-                <Button type="submit" className="w-full">
-                  Entrar
+                <Button type="submit" className="w-full" disabled={isLoading}>
+                  {isLoading ? "Entrando..." : "Entrar"}
                 </Button>
               </div>
               <div className="text-center text-sm">
