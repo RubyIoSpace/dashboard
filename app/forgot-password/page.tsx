@@ -8,6 +8,7 @@ export default function ForgotPasswordPage() {
     // Aqui você pode enviar para a API, mostrar toast, redirecionar, etc.
     console.log("Email enviado para recuperação de senha:", data)
   }
+
   return (
     <div className="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
       <div className="flex w-full max-w-sm flex-col gap-6">

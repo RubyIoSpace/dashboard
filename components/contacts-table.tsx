@@ -287,6 +287,7 @@ export default function ContactsTable() {
         setIsLoading(false)
       }
     }
+
     fetchPosts()
   }, [])
 
