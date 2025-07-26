@@ -1,8 +1,14 @@
 import Image from "next/image"
 
 import { RegisterForm } from "./components/register-form"
+import { RegisterFormValues } from "./components/register-form.schema"
 
 export default function RegisterPage() {
+  async function handleSubmit(data: RegisterFormValues) {
+    // Aqui você pode enviar para a API, mostrar toast, redirecionar, etc.
+    console.log("Dados do registro:", data)
+  }
+
   return (
     <div className="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
       <div className="flex w-full max-w-sm flex-col gap-6">
@@ -17,7 +23,7 @@ export default function RegisterPage() {
           RubyIO Dashboard
         </a>
 
-        <RegisterForm />
+        <RegisterForm onSubmit={handleSubmit}/>
       </div>
     </div>
   )

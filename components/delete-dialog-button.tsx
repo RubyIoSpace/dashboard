@@ -1,5 +1,4 @@
 import { RiDeleteBinLine, RiErrorWarningLine } from "@remixicon/react"
-import React from "react"
 
 import {
   AlertDialog,

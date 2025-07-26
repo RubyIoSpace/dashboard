@@ -1,4 +1,6 @@
 import Link from "next/link"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -11,11 +13,31 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { cn } from "@/lib/utils"
+import { InputErrorMessage } from "@/components/input-error-message"
+
+import {
+  forgotPasswordFormSchema,
+  ForgotPasswordFormValues,
+} from "./forgot-password-form.schema"
+
+interface ForgotPasswordFormProps {
+  onSubmit: (data: ForgotPasswordFormValues) => void
+  className?: string
+}
 
 export function ForgotPasswordForm({
+  onSubmit,
   className,
   ...props
-}: React.ComponentProps<"div">) {
+}: ForgotPasswordFormProps & Omit<React.ComponentProps<"div">, "onSubmit">) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<ForgotPasswordFormValues>({
+    resolver: zodResolver(forgotPasswordFormSchema),
+  })
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -26,7 +48,7 @@ export function ForgotPasswordForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={handleSubmit(onSubmit)} noValidate>
             <div className="grid gap-6">
               <div className="grid gap-6">
                 <div className="grid gap-3">
@@ -35,21 +57,23 @@ export function ForgotPasswordForm({
                     id="email"
                     type="email"
                     placeholder="exemplo@email.com"
+                    {...register("email")}
                     required
                   />
+                  <InputErrorMessage message={errors.email?.message} />
                   <p className="text-xs text-muted-foreground">
                     Enviaremos um link para redefinir sua senha
                   </p>
                 </div>
 
-                <Button type="submit" className="w-full">
+                <Button type="submit" className="w-full" disabled={isSubmitting}>
                   Enviar link de recuperação
                 </Button>
               </div>
               <div className="text-center text-sm">
                 Lembrou da senha?{" "}
                 <Link href="/login" className="underline underline-offset-4">
-                  Fazer login
+                  {isSubmitting ? "Acessando..." : "Fazer login"}
                 </Link>
               </div>
             </div>

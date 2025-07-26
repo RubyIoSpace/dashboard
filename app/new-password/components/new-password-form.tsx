@@ -1,7 +1,8 @@
 "use client"
 
 import Link from "next/link"
-import { useState } from "react"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -14,21 +15,36 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { cn } from "@/lib/utils"
+import { InputErrorMessage } from "@/components/input-error-message"
 
-interface PasswordRequirement {
-  text: string
-  isValid: boolean
+import {
+  newPasswordFormSchema,
+  NewPasswordFormValues,
+} from "./new-password-form.schema"
+
+interface NewPasswordFormProps {
+  onSubmit: (data: NewPasswordFormValues) => void
+  className?: string
 }
 
 export function NewPasswordForm({
+  onSubmit,
   className,
   ...props
-}: React.ComponentProps<"div">) {
-  const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
+}: NewPasswordFormProps & Omit<React.ComponentProps<"div">, "onSubmit">) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    watch,
+  } = useForm<NewPasswordFormValues>({
+    resolver: zodResolver(newPasswordFormSchema),
+  })
 
-  // Validações de senha
-  const requirements: PasswordRequirement[] = [
+  const password = watch("password") || ""
+
+  // Requisitos visuais de senha
+  const requirements = [
     {
       text: "Pelo menos 8 caracteres",
       isValid: password.length >= 8,
@@ -51,17 +67,6 @@ export function NewPasswordForm({
     },
   ]
 
-  const isPasswordValid = requirements.every((req) => req.isValid)
-  const passwordsMatch = password === confirmPassword && password.length > 0
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (isPasswordValid && passwordsMatch) {
-      console.log("Nova senha definida")
-      // Aqui você faria a chamada para a API
-    }
-  }
-
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -72,7 +77,7 @@ export function NewPasswordForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit(onSubmit)} noValidate>
             <div className="grid gap-6">
               {/* Requisitos de senha */}
               <div className="rounded-lg bg-muted/50 p-4">
@@ -112,10 +117,10 @@ export function NewPasswordForm({
                     id="password"
                     type="password"
                     placeholder="Digite sua nova senha"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    {...register("password")}
                     required
                   />
+                  <InputErrorMessage message={errors.password?.message} />
                 </div>
                 <div className="grid gap-3">
                   <Label htmlFor="confirmPassword">Confirmar senha</Label>
@@ -123,21 +128,16 @@ export function NewPasswordForm({
                     id="confirmPassword"
                     type="password"
                     placeholder="Confirme sua nova senha"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    {...register("confirmPassword")}
                     required
                   />
-                  {confirmPassword.length > 0 && !passwordsMatch && (
-                    <p className="text-xs text-red-500">
-                      As senhas não coincidem
-                    </p>
-                  )}
+                  <InputErrorMessage message={errors.confirmPassword?.message} />
                 </div>
 
                 <Button
                   type="submit"
                   className="w-full"
-                  disabled={!isPasswordValid || !passwordsMatch}
+                  disabled={isSubmitting}
                 >
                   Definir nova senha
                 </Button>

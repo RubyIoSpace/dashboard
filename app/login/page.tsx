@@ -4,20 +4,14 @@ import Image from "next/image"
 import { useRouter } from "next/navigation"
 
 import { LoginForm } from "./components/login-form"
+import { LoginFormValues } from "./components/login-form.schema"
 
 export default function LoginPage() {
   const router = useRouter()
 
-  const handleLogin = async (data: { email: string; password: string }) => {
-    console.log("Dados de login:", data)
-
-    // Aqui você faria a chamada para sua API de autenticação
-    // Por exemplo:
-    // const response = await fetch("/api/auth/login", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify(data),
-    // })
+  async function handleSubmit(data: LoginFormValues) {
+    // Aqui você pode enviar para a API, mostrar toast, redirecionar, etc.
+    console.log("Dados do login:", data)
 
     // Simular sucesso no login
     // Em caso de sucesso, redirecionar para dashboard
@@ -38,7 +32,7 @@ export default function LoginPage() {
           RubyIO Dashboard
         </a>
 
-        <LoginForm onSubmit={handleLogin} />
+        <LoginForm onSubmit={handleSubmit} />
       </div>
     </div>
   )

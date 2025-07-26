@@ -1,7 +1,8 @@
 "use client"
 
 import Link from "next/link"
-import { useState } from "react"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -14,12 +15,15 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { cn } from "@/lib/utils"
+import { InputErrorMessage } from "@/components/input-error-message"
 
 import { AppleLoginButton } from "../../../components/apple-login-button"
 import { GoogleLoginButton } from "../../../components/google-login-button"
 
+import { loginFormSchema, LoginFormValues } from "./login-form.schema"
+
 interface LoginFormProps {
-  onSubmit?: (data: { email: string; password: string }) => void
+  onSubmit: (data: LoginFormValues) => void
   className?: string
 }
 
@@ -28,27 +32,14 @@ export function LoginForm({
   className,
   ...props
 }: LoginFormProps & Omit<React.ComponentProps<"div">, "onSubmit">) {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<LoginFormValues>({
+    resolver: zodResolver(loginFormSchema),
+  })
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
-
-    try {
-      if (onSubmit) {
-        await onSubmit({ email, password })
-      } else {
-        // Comportamento padrão se não houver onSubmit
-        console.log("Login realizado:", { email, password })
-      }
-    } catch (error) {
-      console.error("Erro no login:", error)
-    } finally {
-      setIsLoading(false)
-    }
-  }
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -59,7 +50,7 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit(onSubmit)} noValidate>
             <div className="grid gap-6">
               <div className="flex flex-col gap-4">
                 <GoogleLoginButton />
@@ -78,10 +69,11 @@ export function LoginForm({
                     id="email"
                     type="email"
                     placeholder="exemplo@email.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    autoComplete="email"
+                    {...register("email")}
                     required
                   />
+                  <InputErrorMessage message={errors.email?.message} />
                 </div>
                 <div className="grid gap-3">
                   <div className="flex items-center">
@@ -96,13 +88,14 @@ export function LoginForm({
                   <Input
                     id="password"
                     type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    autoComplete="current-password"
+                    {...register("password")}
                     required
                   />
+                  <InputErrorMessage message={errors.password?.message} />
                 </div>
-                <Button type="submit" className="w-full" disabled={isLoading}>
-                  {isLoading ? "Entrando..." : "Entrar"}
+                <Button type="submit" className="w-full" disabled={isSubmitting}>
+                  {isSubmitting ? "Entrando..." : "Entrar"}
                 </Button>
               </div>
               <div className="text-center text-sm">
