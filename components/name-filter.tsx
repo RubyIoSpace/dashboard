@@ -1,7 +1,7 @@
-import { Input } from "@/components/ui/input";
-import { RiSearch2Line, RiCloseCircleLine } from "@remixicon/react";
-import { cn } from "@/lib/utils";
-import { forwardRef } from "react";
+import { Input } from "@/components/ui/input"
+import { RiSearch2Line, RiCloseCircleLine } from "@remixicon/react"
+import { cn } from "@/lib/utils"
+import { forwardRef } from "react"
 
 interface NameFilterProps {
   id: string;
@@ -34,9 +34,9 @@ export const NameFilter = forwardRef<HTMLInputElement, NameFilterProps>(
             className="absolute inset-y-0 end-0 flex h-full w-9 items-center justify-center rounded-e-lg text-muted-foreground/60 outline-offset-2 transition-colors hover:text-foreground focus:z-10 focus-visible:outline-2 focus-visible:outline-ring/70 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
             aria-label="Clear filter"
             onClick={() => {
-              onChange("");
+              onChange("")
               if (ref && typeof ref !== "function" && ref.current) {
-                ref.current.focus();
+                ref.current.focus()
               }
             }}
           >
@@ -44,6 +44,6 @@ export const NameFilter = forwardRef<HTMLInputElement, NameFilterProps>(
           </button>
         )}
       </div>
-    );
+    )
   }
-);
+)

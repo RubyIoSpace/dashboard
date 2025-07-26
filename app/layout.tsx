@@ -1,16 +1,16 @@
-import { Inter } from "next/font/google";
+import { Inter } from "next/font/google"
 
-import "./globals.css";
+import "./globals.css"
 
 const fontSans = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
-});
+})
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html lang="en" className="dark scheme-only-dark">
@@ -18,5 +18,5 @@ export default function RootLayout({
         {children}
       </body>
     </html>
-  );
+  )
 }

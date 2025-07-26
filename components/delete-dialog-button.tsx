@@ -8,11 +8,11 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
-import { RiDeleteBinLine, RiErrorWarningLine } from "@remixicon/react";
-import React from "react";
-import { DropdownMenuItem } from "./ui/dropdown-menu";
+} from "@/components/ui/alert-dialog"
+import { Button } from "@/components/ui/button"
+import { RiDeleteBinLine, RiErrorWarningLine } from "@remixicon/react"
+import React from "react"
+import { DropdownMenuItem } from "./ui/dropdown-menu"
 
 interface DeleteDialogButtonProps {
   onDelete: () => void;
@@ -20,7 +20,7 @@ interface DeleteDialogButtonProps {
   triggerText?: string;
   title?: string;
   description?: string;
-  type?: 'button' | 'dropdown';
+  type?: "button" | "dropdown";
 }
 
 export function DeleteDialogButton({
@@ -29,11 +29,11 @@ export function DeleteDialogButton({
   triggerText = "Delete",
   title = "Are you sure?",
   description = "This action cannot be undone. This will permanently delete this record.",
-  type = 'button',
+  type = "button",
 }: DeleteDialogButtonProps) {
   return (
     <AlertDialog>
-      {type === 'button' && <AlertDialogTrigger asChild>
+      {type === "button" && <AlertDialogTrigger asChild>
         <Button
           variant="destructive"
           size="sm"
@@ -45,7 +45,7 @@ export function DeleteDialogButton({
         </Button>
       </AlertDialogTrigger>}
 
-      {type === 'dropdown' && <AlertDialogTrigger asChild>
+      {type === "dropdown" && <AlertDialogTrigger asChild>
         <DropdownMenuItem
           variant="destructive"
           className="dark:data-[variant=destructive]:focus:bg-destructive/10"
@@ -76,5 +76,5 @@ export function DeleteDialogButton({
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
-  );
+  )
 }

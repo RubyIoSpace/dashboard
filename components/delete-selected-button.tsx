@@ -8,10 +8,10 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
-import { RiDeleteBinLine, RiErrorWarningLine } from "@remixicon/react";
-import React from "react";
+} from "@/components/ui/alert-dialog"
+import { Button } from "@/components/ui/button"
+import { RiDeleteBinLine, RiErrorWarningLine } from "@remixicon/react"
+import React from "react"
 
 interface DeleteSelectedButtonProps {
   selectedCount: number;
@@ -22,7 +22,7 @@ export function DeleteSelectedButton({
   selectedCount,
   onDelete,
 }: DeleteSelectedButtonProps) {
-  if (selectedCount === 0) return null;
+  if (selectedCount === 0) return null
 
   return (
     <AlertDialog>
@@ -65,5 +65,5 @@ export function DeleteSelectedButton({
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
-  );
+  )
 }

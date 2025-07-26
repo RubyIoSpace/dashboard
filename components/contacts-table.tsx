@@ -1,21 +1,8 @@
-"use client";
+"use client"
 
-import { cn } from "@/lib/utils";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Progress } from "@/components/ui/progress";
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,19 +10,13 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from "@/components/ui/dropdown-menu"
 import {
   Pagination,
   PaginationContent,
   PaginationItem,
-} from "@/components/ui/pagination";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+} from "@/components/ui/pagination"
+import { Progress } from "@/components/ui/progress"
 import {
   Table,
   TableBody,
@@ -43,7 +24,20 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/components/ui/table"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+import { cn } from "@/lib/utils"
+import {
+  RiBardLine,
+  RiCheckLine,
+  RiMoreLine,
+  RiVerifiedBadgeFill,
+} from "@remixicon/react"
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -58,68 +52,42 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
-} from "@tanstack/react-table";
-import {
-  RiArrowDownSLine,
-  RiArrowUpSLine,
-  RiErrorWarningLine,
-  RiCloseCircleLine,
-  RiDeleteBinLine,
-  RiBardLine,
-  RiFilter3Line,
-  RiSearch2Line,
-  RiVerifiedBadgeFill,
-  RiCheckLine,
-  RiMoreLine,
-} from "@remixicon/react";
-import {
-  useEffect,
-  useId,
-  useMemo,
-  useRef,
-  useState,
-  useTransition,
-} from "react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { TableHeaderCell } from "./table-header-cell";
-import { NameFilter } from "./name-filter";
-import { StatusFilter } from "./status-filter";
-import { DeleteDialogButton } from "./delete-dialog-button";
-import { DeleteSelectedButton } from "./delete-selected-button";
+} from "@tanstack/react-table"
+import { useEffect, useId, useMemo, useState, useTransition } from "react"
+import { DeleteDialogButton } from "./delete-dialog-button"
+import { DeleteSelectedButton } from "./delete-selected-button"
+import { NameFilter } from "./name-filter"
+import { StatusFilter } from "./status-filter"
+import { TableHeaderCell } from "./table-header-cell"
 
 type Item = {
-  id: string;
-  image: string;
-  name: string;
-  status: string;
-  location: string;
-  verified: boolean;
+  id: string
+  image: string
+  name: string
+  status: string
+  location: string
+  verified: boolean
   referral: {
-    name: string;
-    image: string;
-  };
-  value: number;
-  joinDate: string;
-};
+    name: string
+    image: string
+  }
+  value: number
+  joinDate: string
+}
 
 const statusFilterFn: FilterFn<Item> = (
   row,
   columnId,
-  filterValue: string[],
+  filterValue: string[]
 ) => {
-  if (!filterValue?.length) return true;
-  const status = row.getValue(columnId) as string;
-  return filterValue.includes(status);
-};
+  if (!filterValue?.length) return true
+  const status = row.getValue(columnId) as string
+  return filterValue.includes(status)
+}
 
 interface GetColumnsProps {
-  data: Item[];
-  setData: React.Dispatch<React.SetStateAction<Item[]>>;
+  data: Item[]
+  setData: React.Dispatch<React.SetStateAction<Item[]>>
 }
 
 const getColumns = ({ data, setData }: GetColumnsProps): ColumnDef<Item>[] => [
@@ -183,7 +151,7 @@ const getColumns = ({ data, setData }: GetColumnsProps): ColumnDef<Item>[] => [
             "gap-1 py-0.5 px-2 text-sm",
             row.original.status === "Inactive"
               ? "text-muted-foreground"
-              : "text-primary-foreground",
+              : "text-primary-foreground"
           )}
         >
           {row.original.status === "Active" && (
@@ -222,7 +190,7 @@ const getColumns = ({ data, setData }: GetColumnsProps): ColumnDef<Item>[] => [
           className={cn(
             row.original.verified
               ? "fill-emerald-600"
-              : "fill-muted-foreground/50",
+              : "fill-muted-foreground/50"
           )}
           aria-hidden="true"
         />
@@ -253,7 +221,7 @@ const getColumns = ({ data, setData }: GetColumnsProps): ColumnDef<Item>[] => [
     header: "Value",
     accessorKey: "value",
     cell: ({ row }) => {
-      const value = row.getValue("value") as number;
+      const value = row.getValue("value") as number
       return (
         <TooltipProvider delayDuration={0}>
           <Tooltip>
@@ -267,7 +235,7 @@ const getColumns = ({ data, setData }: GetColumnsProps): ColumnDef<Item>[] => [
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
-      );
+      )
     },
     size: 80,
   },
@@ -280,53 +248,53 @@ const getColumns = ({ data, setData }: GetColumnsProps): ColumnDef<Item>[] => [
     size: 60,
     enableHiding: false,
   },
-];
+]
 
 export default function ContactsTable() {
-  const id = useId();
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const id = useId()
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
-  });
+  })
   const [sorting, setSorting] = useState<SortingState>([
     {
       id: "name",
       desc: false,
     },
-  ]);
+  ])
 
-  const [data, setData] = useState<Item[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [data, setData] = useState<Item[]>([])
+  const [isLoading, setIsLoading] = useState(true)
 
-  const columns = useMemo(() => getColumns({ data, setData }), [data]);
+  const columns = useMemo(() => getColumns({ data, setData }), [data])
 
   useEffect(() => {
     async function fetchPosts() {
       try {
         const res = await fetch(
-          "https://raw.githubusercontent.com/origin-space/origin-images/refs/heads/main/users-02_mohkpe.json",
-        );
-        const data = await res.json();
-        setData(data);
+          "https://raw.githubusercontent.com/origin-space/origin-images/refs/heads/main/users-02_mohkpe.json"
+        )
+        const data = await res.json()
+        setData(data)
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching data:", error)
       } finally {
-        setIsLoading(false);
+        setIsLoading(false)
       }
     }
-    fetchPosts();
-  }, []);
+    fetchPosts()
+  }, [])
 
   const handleDeleteRows = () => {
-    const selectedRows = table.getSelectedRowModel().rows;
+    const selectedRows = table.getSelectedRowModel().rows
     const updatedData = data.filter(
-      (item) => !selectedRows.some((row) => row.original.id === item.id),
-    );
-    setData(updatedData);
-    table.resetRowSelection();
-  };
+      (item) => !selectedRows.some((row) => row.original.id === item.id)
+    )
+    setData(updatedData)
+    table.resetRowSelection()
+  }
 
   const table = useReactTable({
     data,
@@ -347,29 +315,32 @@ export default function ContactsTable() {
       columnFilters,
       columnVisibility,
     },
-  });
+  })
 
   // Extract complex expressions into separate variables
-  const statusColumn = table.getColumn("status");
-  const statusFacetedValues = statusColumn?.getFacetedUniqueValues();
+  const statusColumn = table.getColumn("status")
+  const statusFacetedValues = statusColumn?.getFacetedUniqueValues()
 
-  const statusFilterValue = (table.getColumn("status")?.getFilterValue() as string[]) ?? [];
+  const statusFilterValue =
+    (table.getColumn("status")?.getFilterValue() as string[]) ?? []
 
   const handleStatusChange = (newValue: string[]) => {
-    table.getColumn("status")?.setFilterValue(newValue.length ? newValue : undefined);
-  };
+    table
+      .getColumn("status")
+      ?.setFilterValue(newValue.length ? newValue : undefined)
+  }
 
   // Update useMemo hooks with simplified dependencies
   const uniqueStatusValues = useMemo(() => {
-    if (!statusColumn) return [];
-    const values = Array.from(statusFacetedValues?.keys() ?? []);
-    return values.sort();
-  }, [statusColumn, statusFacetedValues]);
+    if (!statusColumn) return []
+    const values = Array.from(statusFacetedValues?.keys() ?? [])
+    return values.sort()
+  }, [statusColumn, statusFacetedValues])
 
   const statusCounts = useMemo(() => {
-    if (!statusColumn) return new Map();
-    return statusFacetedValues ?? new Map();
-  }, [statusColumn, statusFacetedValues]);
+    if (!statusColumn) return new Map()
+    return statusFacetedValues ?? new Map()
+  }, [statusColumn, statusFacetedValues])
 
   return (
     <div className="space-y-4">
@@ -504,7 +475,7 @@ export default function ContactsTable() {
         </div>
       )}
     </div>
-  );
+  )
 }
 
 function RowActions({
@@ -512,11 +483,11 @@ function RowActions({
   data,
   item,
 }: {
-  setData: React.Dispatch<React.SetStateAction<Item[]>>;
-  data: Item[];
-  item: Item;
+  setData: React.Dispatch<React.SetStateAction<Item[]>>
+  data: Item[]
+  item: Item
 }) {
-  const [isUpdatePending, startUpdateTransition] = useTransition();
+  const [isUpdatePending, startUpdateTransition] = useTransition()
 
   const handleStatusToggle = () => {
     startUpdateTransition(() => {
@@ -525,13 +496,13 @@ function RowActions({
           return {
             ...dataItem,
             status: item.status === "Active" ? "Inactive" : "Active",
-          };
+          }
         }
-        return dataItem;
-      });
-      setData(updatedData);
-    });
-  };
+        return dataItem
+      })
+      setData(updatedData)
+    })
+  }
 
   const handleVerifiedToggle = () => {
     startUpdateTransition(() => {
@@ -540,20 +511,20 @@ function RowActions({
           return {
             ...dataItem,
             verified: !item.verified,
-          };
+          }
         }
-        return dataItem;
-      });
-      setData(updatedData);
-    });
-  };
+        return dataItem
+      })
+      setData(updatedData)
+    })
+  }
 
   const handleDelete = () => {
     startUpdateTransition(() => {
-      const updatedData = data.filter((dataItem) => dataItem.id !== item.id);
-      setData(updatedData);
-    });
-  };
+      const updatedData = data.filter((dataItem) => dataItem.id !== item.id)
+      setData(updatedData)
+    })
+  }
 
   return (
     <>
@@ -608,5 +579,5 @@ function RowActions({
         </DropdownMenuContent>
       </DropdownMenu>
     </>
-  );
+  )
 }

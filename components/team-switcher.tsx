@@ -1,6 +1,6 @@
-"use client";
+"use client"
 
-import * as React from "react";
+import * as React from "react"
 
 import {
   DropdownMenu,
@@ -10,13 +10,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu"
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar";
-import { RiExpandUpDownLine, RiAddLine } from "@remixicon/react";
+} from "@/components/ui/sidebar"
+import { RiExpandUpDownLine, RiAddLine } from "@remixicon/react"
 
 export function TeamSwitcher({
   teams,
@@ -26,9 +26,9 @@ export function TeamSwitcher({
     logo: string;
   }[];
 }) {
-  const [activeTeam, setActiveTeam] = React.useState(teams[0] ?? null);
+  const [activeTeam, setActiveTeam] = React.useState(teams[0] ?? null)
 
-  if (!teams.length) return null;
+  if (!teams.length) return null
 
   return (
     <SidebarMenu>
@@ -92,5 +92,5 @@ export function TeamSwitcher({
         </DropdownMenu>
       </SidebarMenuItem>
     </SidebarMenu>
-  );
+  )
 }

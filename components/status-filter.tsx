@@ -1,12 +1,12 @@
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Label } from "@/components/ui/label"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
-import { RiFilter3Line } from "@remixicon/react";
+} from "@/components/ui/popover"
+import { RiFilter3Line } from "@remixicon/react"
 
 interface StatusFilterProps {
   id: string;
@@ -24,14 +24,14 @@ export function StatusFilter({
   onChange,
 }: StatusFilterProps) {
   const handleToggle = (checked: boolean, option: string) => {
-    let newValue = [...value];
+    let newValue = [...value]
     if (checked) {
-      if (!newValue.includes(option)) newValue.push(option);
+      if (!newValue.includes(option)) newValue.push(option)
     } else {
-      newValue = newValue.filter((v) => v !== option);
+      newValue = newValue.filter((v) => v !== option)
     }
-    onChange(newValue);
-  };
+    onChange(newValue)
+  }
 
   return (
     <Popover>
@@ -80,5 +80,5 @@ export function StatusFilter({
         </div>
       </PopoverContent>
     </Popover>
-  );
+  )
 }

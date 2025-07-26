@@ -1,5 +1,5 @@
-import { AppSidebar } from "@/components/app-sidebar";
-import FeedbackDialog from "@/components/feedback-dialog";
+import { AppSidebar } from "@/components/app-sidebar"
+import FeedbackDialog from "@/components/feedback-dialog"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -7,20 +7,20 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { Separator } from "@/components/ui/separator";
+} from "@/components/ui/breadcrumb"
+import { Separator } from "@/components/ui/separator"
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
-} from "@/components/ui/sidebar";
-import UserDropdown from "@/components/user-dropdown";
-import { RiScanLine } from "@remixicon/react";
+} from "@/components/ui/sidebar"
+import UserDropdown from "@/components/user-dropdown"
+import { RiScanLine } from "@remixicon/react"
 
 export default function Layout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <SidebarProvider>
@@ -55,11 +55,10 @@ export default function Layout({
         </header>
         <div className="flex flex-1 flex-col gap-4 lg:gap-6 py-4 lg:py-6">
           {/* Page intro */}
-          
-          {children}
 
+          {children}
         </div>
       </SidebarInset>
     </SidebarProvider>
-  );
+  )
 }

@@ -1,4 +1,4 @@
-import { RiArrowUpSLine, RiArrowDownSLine } from "@remixicon/react";
+import { RiArrowUpSLine, RiArrowDownSLine } from "@remixicon/react"
 
 interface TableSortIconProps {
   direction?: "asc" | "desc";
@@ -12,7 +12,7 @@ export function TableSortIcon({ direction }: TableSortIconProps) {
         size={16}
         aria-hidden="true"
       />
-    );
+    )
   }
   if (direction === "desc") {
     return (
@@ -21,7 +21,7 @@ export function TableSortIcon({ direction }: TableSortIconProps) {
         size={16}
         aria-hidden="true"
       />
-    );
+    )
   }
-  return null;
+  return null
 }

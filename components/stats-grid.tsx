@@ -1,5 +1,5 @@
-import { RiArrowRightUpLine } from "@remixicon/react";
-import { cn } from "@/lib/utils";
+import { RiArrowRightUpLine } from "@remixicon/react"
+import { cn } from "@/lib/utils"
 
 interface StatsCardProps {
   title: string;
@@ -12,8 +12,8 @@ interface StatsCardProps {
 }
 
 export function StatsCard({ title, value, change, icon }: StatsCardProps) {
-  const isPositive = change.trend === "up";
-  const trendColor = isPositive ? "text-emerald-500" : "text-red-500";
+  const isPositive = change.trend === "up"
+  const trendColor = isPositive ? "text-emerald-500" : "text-red-500"
 
   return (
     <div className="relative p-4 lg:p-5 group before:absolute before:inset-y-8 before:right-0 before:w-px before:bg-gradient-to-b before:from-input/30 before:via-input before:to-input/30 last:before:hidden">
@@ -45,7 +45,7 @@ export function StatsCard({ title, value, change, icon }: StatsCardProps) {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 interface StatsGridProps {
@@ -59,5 +59,5 @@ export function StatsGrid({ stats }: StatsGridProps) {
         <StatsCard key={stat.title} {...stat} />
       ))}
     </div>
-  );
+  )
 }

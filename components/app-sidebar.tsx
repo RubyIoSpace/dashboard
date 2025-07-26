@@ -1,7 +1,7 @@
-import * as React from "react";
+import * as React from "react"
 
-import { SearchForm } from "@/components/search-form";
-import { TeamSwitcher } from "@/components/team-switcher";
+import { SearchForm } from "@/components/search-form"
+import { TeamSwitcher } from "@/components/team-switcher"
 import {
   Sidebar,
   SidebarContent,
@@ -14,7 +14,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
-} from "@/components/ui/sidebar";
+} from "@/components/ui/sidebar"
 import {
   RiScanLine,
   RiBardLine,
@@ -25,7 +25,7 @@ import {
   RiSettings3Line,
   RiLeafLine,
   RiLogoutBoxLine,
-} from "@remixicon/react";
+} from "@remixicon/react"
 
 // This is sample data.
 const data = {
@@ -103,7 +103,7 @@ const data = {
       ],
     },
   ],
-};
+}
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
@@ -164,5 +164,5 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
-  );
+  )
 }
