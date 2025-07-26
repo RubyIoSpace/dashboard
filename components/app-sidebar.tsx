@@ -1,4 +1,15 @@
 import * as React from "react"
+import {
+  RiScanLine,
+  RiBardLine,
+  RiUserFollowLine,
+  RiCodeSSlashLine,
+  RiLoginCircleLine,
+  RiLayoutLeftLine,
+  RiSettings3Line,
+  RiLeafLine,
+  RiLogoutBoxLine,
+} from "@remixicon/react"
 
 import { SearchForm } from "@/components/search-form"
 import { TeamSwitcher } from "@/components/team-switcher"
@@ -15,17 +26,6 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar"
-import {
-  RiScanLine,
-  RiBardLine,
-  RiUserFollowLine,
-  RiCodeSSlashLine,
-  RiLoginCircleLine,
-  RiLayoutLeftLine,
-  RiSettings3Line,
-  RiLeafLine,
-  RiLogoutBoxLine,
-} from "@remixicon/react"
 
 // This is sample data.
 const data = {

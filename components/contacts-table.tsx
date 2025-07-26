@@ -1,5 +1,29 @@
 "use client"
 
+import {
+  RiBardLine,
+  RiCheckLine,
+  RiMoreLine,
+  RiVerifiedBadgeFill,
+} from "@remixicon/react"
+import {
+  ColumnDef,
+  ColumnFiltersState,
+  FilterFn,
+  PaginationState,
+  SortingState,
+  VisibilityState,
+  flexRender,
+  getCoreRowModel,
+  getFacetedUniqueValues,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from "@tanstack/react-table"
+import Image from "next/image"
+import { useEffect, useId, useMemo, useState, useTransition } from "react"
+
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -32,28 +56,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
-import {
-  RiBardLine,
-  RiCheckLine,
-  RiMoreLine,
-  RiVerifiedBadgeFill,
-} from "@remixicon/react"
-import {
-  ColumnDef,
-  ColumnFiltersState,
-  FilterFn,
-  PaginationState,
-  SortingState,
-  VisibilityState,
-  flexRender,
-  getCoreRowModel,
-  getFacetedUniqueValues,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
-} from "@tanstack/react-table"
-import { useEffect, useId, useMemo, useState, useTransition } from "react"
+
 import { DeleteDialogButton } from "./delete-dialog-button"
 import { DeleteSelectedButton } from "./delete-selected-button"
 import { NameFilter } from "./name-filter"
@@ -119,7 +122,7 @@ const getColumns = ({ data, setData }: GetColumnsProps): ColumnDef<Item>[] => [
     accessorKey: "name",
     cell: ({ row }) => (
       <div className="flex items-center gap-3">
-        <img
+        <Image
           className="rounded-full"
           src={row.original.image}
           width={32}
@@ -203,7 +206,7 @@ const getColumns = ({ data, setData }: GetColumnsProps): ColumnDef<Item>[] => [
     accessorKey: "referral",
     cell: ({ row }) => (
       <div className="flex items-center gap-3">
-        <img
+        <Image
           className="rounded-full"
           src={row.original.referral.image}
           width={20}

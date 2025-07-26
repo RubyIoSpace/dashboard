@@ -1,3 +1,6 @@
+import { RiDeleteBinLine, RiErrorWarningLine } from "@remixicon/react"
+import React from "react"
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -10,8 +13,6 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
-import { RiDeleteBinLine, RiErrorWarningLine } from "@remixicon/react"
-import React from "react"
 
 interface DeleteSelectedButtonProps {
   selectedCount: number;

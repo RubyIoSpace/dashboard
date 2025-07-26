@@ -1,16 +1,17 @@
-import { Input } from "@/components/ui/input"
-import { RiSearch2Line, RiCloseCircleLine } from "@remixicon/react"
-import { cn } from "@/lib/utils"
+import { RiCloseCircleLine, RiSearch2Line } from "@remixicon/react"
 import { forwardRef } from "react"
 
+import { Input } from "@/components/ui/input"
+import { cn } from "@/lib/utils"
+
 interface NameFilterProps {
-  id: string;
-  value: string;
-  onChange: (value: string) => void;
+  id: string
+  value: string
+  onChange: (value: string) => void
 }
 
 export const NameFilter = forwardRef<HTMLInputElement, NameFilterProps>(
-  function NameFilter({ id, value, onChange }, ref) {
+  ({ id, value, onChange }, ref) => {
     return (
       <div className="relative">
         <Input
@@ -18,7 +19,7 @@ export const NameFilter = forwardRef<HTMLInputElement, NameFilterProps>(
           ref={ref}
           className={cn(
             "peer min-w-60 ps-9 bg-background bg-gradient-to-br from-accent/60 to-accent",
-            Boolean(value) && "pe-9",
+            Boolean(value) && "pe-9"
           )}
           value={value}
           onChange={(e) => onChange(e.target.value)}
@@ -47,3 +48,5 @@ export const NameFilter = forwardRef<HTMLInputElement, NameFilterProps>(
     )
   }
 )
+
+NameFilter.displayName = "NameFilter"

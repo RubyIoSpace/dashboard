@@ -1,3 +1,5 @@
+import { RiScanLine } from "@remixicon/react"
+
 import { AppSidebar } from "@/components/app-sidebar"
 import FeedbackDialog from "@/components/feedback-dialog"
 import {
@@ -15,7 +17,6 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar"
 import UserDropdown from "@/components/user-dropdown"
-import { RiScanLine } from "@remixicon/react"
 
 export default function Layout({
   children,

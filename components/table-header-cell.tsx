@@ -1,7 +1,9 @@
 import { flexRender } from "@tanstack/react-table"
-import { cn } from "@/lib/utils"
-import { TableSortIcon } from "./table-sort-icon"
 import type { Header } from "@tanstack/react-table"
+
+import { cn } from "@/lib/utils"
+
+import { TableSortIcon } from "./table-sort-icon"
 
 interface TableHeaderCellProps<TData> {
   header: Header<TData, unknown>;

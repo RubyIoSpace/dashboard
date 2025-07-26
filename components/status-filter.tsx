@@ -1,3 +1,5 @@
+import { RiFilter3Line } from "@remixicon/react"
+
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
@@ -6,7 +8,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { RiFilter3Line } from "@remixicon/react"
 
 interface StatusFilterProps {
   id: string;
